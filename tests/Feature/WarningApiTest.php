@@ -23,7 +23,7 @@ class WarningApiTest extends TestCase
 
     public function testFilter()
     {
-        $warning = factory(Warning::class, 1)->create()->first();
+        $warning = factory(Warning::class, 5)->create()->first();
 
         $request = $this->get("/api/v1/warnings?filter=city:{$warning->city}");
         $data = $request->json();
