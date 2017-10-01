@@ -36,7 +36,7 @@ class WarningUpdater implements ShouldQueue
     public function handle()
     {
         Collection::make($this->warningRepository->getWarnings())->each(function ($message) {
-            tap(quoted_printable_decode($message), function ($city) {
+            tap(str_replace(["\r", "\n"], '', quoted_printable_decode($message)), function ($city) {
                 Warning::query()->create(['city' => $city]);
             });
         });
