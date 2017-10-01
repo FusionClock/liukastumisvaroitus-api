@@ -1,5 +1,5 @@
 up:
-	cd laradock && docker-compose up -d nginx mysql redis
+	cd laradock && docker-compose up -d nginx mysql redis workspace
 
 down:
 	cd laradock && docker-compose down

@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Warning extends Model
 {
-    //
+    protected $fillable = [
+        'city',
+    ];
 }
