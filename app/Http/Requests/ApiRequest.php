@@ -42,11 +42,29 @@ class ApiRequest extends FormRequest
      */
     public function filter(): Collection
     {
-        if (!$this->has('filter')) {
+        return $this->getFormattedProperty('filter');
+    }
+
+    /**
+     * @return Collection
+     */
+    public function order(): Collection
+    {
+        return $this->getFormattedProperty('order');
+    }
+
+    /**
+     * @param string $proprety
+     *
+     * @return Collection
+     */
+    private function getFormattedProperty(string $proprety): Collection
+    {
+        if (!$this->has($proprety)) {
             return new Collection();
         }
 
-        $filters = explode(',', $this->get('filter'));
+        $filters = explode(',', $this->get($proprety));
 
         return Collection::make($filters)->map(function (string $filter) {
             $parts = explode(':', $filter);
