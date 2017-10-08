@@ -45,7 +45,7 @@ class WarningApiTest extends TestCase
             Arr::pluck($data, 'city')
         );
     }
-
+  
     public function testShow()
     {
         $warning = factory(Warning::class, 5)->create()->first();
