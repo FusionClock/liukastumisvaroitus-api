@@ -45,6 +45,10 @@ abstract class ApiController extends Controller
             $request->filter()->each(function (Collection $filter) use ($builder) {
                 $builder->where($filter->first(), '=', $filter->last());
             });
+
+            $request->order()->each(function (Collection $filter) use ($builder) {
+                $builder->orderBy($filter->first(), $filter->last());
+            });
         });
     }
 

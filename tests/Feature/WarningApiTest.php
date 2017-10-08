@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Warning;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -31,6 +32,20 @@ class WarningApiTest extends TestCase
         $this->assertEquals($warning->city, Arr::get($data, '0.city'));
     }
 
+    public function testOrder()
+    {
+        /** @var Collection $warnings */
+        $warnings = factory(Warning::class, 5)->create();
+
+        $request = $this->get("/api/v1/warnings?order=city:asc");
+        $data = $request->json();
+
+        $this->assertEquals(
+            $warnings->pluck('city')->sort()->values()->toArray(),
+            Arr::pluck($data, 'city')
+        );
+    }
+  
     public function testShow()
     {
         $warning = factory(Warning::class, 5)->create()->first();
