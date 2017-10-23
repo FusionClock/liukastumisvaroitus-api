@@ -40,6 +40,7 @@ class WarningUpdater implements ShouldQueue
                 $city = quoted_printable_decode($city);
                 $city = str_replace(["\r", "\n"], '', $city);
                 $city = utf8_encode($city);
+                $city = ucfirst($city);
 
                 Warning::query()->create(['city' => $city]);
             });
