@@ -35,15 +35,20 @@ class WarningUpdater implements ShouldQueue
      */
     public function handle()
     {
-        Collection::make($this->warningRepository->getWarnings())->each(function ($message) {
-            tap($message, function ($city) {
+        Collection::make($this->warningRepository->getWarnings())
+            ->map(function ($city) {
                 $city = quoted_printable_decode($city);
                 $city = str_replace(["\r", "\n"], '', $city);
                 $city = utf8_encode($city);
                 $city = ucfirst($city);
 
+                return $city;
+            })
+            ->filter(function ($city) {
+                return $city !== 'Lipat';
+            })
+            ->each(function ($city) {
                 Warning::query()->create(['city' => $city]);
             });
-        });
     }
 }
