@@ -8,3 +8,6 @@ restart: down up
 
 bash:
 	cd laradock && docker-compose exec workspace bash
+
+mysqldump:
+	cd laradock && docker-compose exec mysql mysqldump -u default -psecret default > dump.sql
