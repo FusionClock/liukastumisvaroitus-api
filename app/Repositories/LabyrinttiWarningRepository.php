@@ -65,6 +65,12 @@ class LabyrinttiWarningRepository implements WarningRepositoryInterface
         $messages = [];
 
         for ($index = 1; $index <= $numberOfMessages; $index++) {
+            $overview = imap_fetch_overview($this->connection, $index);
+
+            if ($overview[0]->subject !== 'Varoitus') {
+                continue;
+            }
+
             $messages[] = imap_fetchbody($this->connection, $index, 1.0);
 
             imap_mail_move($this->connection, $index, 'Trash');
